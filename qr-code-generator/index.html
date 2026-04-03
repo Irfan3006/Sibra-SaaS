@@ -20,6 +20,16 @@
     <!-- QRCode.js CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6M7RKD7H5J"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-6M7RKD7H5J');
+    </script>
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -465,6 +475,10 @@
                     let val = document.getElementById('qr-url').value.trim();
                     if (!val) return { error: 'Alamat URL tidak boleh kosong' };
                     
+                    if (val.length > 2048) {
+                        return { error: 'URL terlalu panjang (maksimal 2048 karakter)' };
+                    }
+                    
                     // Auto-prefix if missing protocol
                     if (!/^https?:\/\//i.test(val)) {
                         val = 'https://' + val;
@@ -480,6 +494,7 @@
                 }
                 if (type === 'text') {
                     const val = document.getElementById('qr-text').value.trim();
+                    if (val.length > 20048) return { error: 'Teks terlalu panjang (maksimal 20048 karakter)' };
                     return val ? { data: val } : { error: 'Isi teks tidak boleh kosong' };
                 }
                 if (type === 'wa') {
