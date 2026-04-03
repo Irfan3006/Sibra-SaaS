@@ -36,7 +36,6 @@ Proyek ini merupakan bagian dari ekosistem:
 - `assets/`: Folder untuk gambar, favicon, dan resource statis lainnya.
 
 ## Licenses & Copyrights
-© 2026 Sibra Tech Company. All rights reserved.
-
+Open Source **MIT License**. © 2026 Sibra Tech Company. All rights reserved.
 ---
 *Dibuat dengan ❤️ untuk kemajuan digital Indonesia.*
