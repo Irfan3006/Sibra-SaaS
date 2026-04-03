@@ -37,5 +37,6 @@ Proyek ini merupakan bagian dari ekosistem:
 
 ## Licenses & Copyrights
 Open Source **MIT License**. © 2026 Sibra Tech Company. All rights reserved.
+
 ---
 *Dibuat dengan ❤️ untuk kemajuan digital Indonesia.*
