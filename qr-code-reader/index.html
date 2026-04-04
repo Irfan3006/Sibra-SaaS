@@ -43,6 +43,7 @@
             border-radius: 1rem;
             overflow: hidden;
             background: #000;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
         }
         #reader video {
             border-radius: 1rem;
@@ -447,10 +448,26 @@
                     isScanning = true;
                     loadingStream.classList.remove('hidden');
                     
+                    // Optimized Config for High Performance (<100ms response)
+                    const qrBoxSize = (viewWidth, viewHeight) => {
+                        const minEdge = Math.min(viewWidth, viewHeight);
+                        const size = Math.floor(minEdge * 0.7); // 70% of viewport
+                        return { width: size, height: size };
+                    };
+
                     const config = { 
-                        fps: 15, 
-                        qrbox: { width: 250, height: 250 },
-                        aspectRatio: 1.777778
+                        fps: 60, // Targeting ultra-fast capture
+                        qrbox: qrBoxSize, 
+                        aspectRatio: 1.0, // Square focus for better accuracy
+                        experimentalFeatures: {
+                            useBarCodeDetectorIfSupported: true // Native hardware acceleration
+                        },
+                        videoConstraints: {
+                            facingMode: "environment",
+                            width: { ideal: 1280 }, // 720p
+                            height: { ideal: 720 },
+                            frameRate: { ideal: 60 } // Smooth motion capture
+                        }
                     };
 
                     await html5QrCode.start(
