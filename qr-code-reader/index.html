@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Reader Gratis - Scan QR Online | Sibra SaaS Indonesia</title>
+    <meta name="description" content="Scan QR Code gratis langsung dari kamera atau upload gambar. Cepat, mudah, tanpa login. Cocok untuk UMKM dan mahasiswa di Indonesia.">
+    <meta name="keywords" content="scan qr code online, qr code reader gratis, scan qr dari gambar, qr reader gratis, sibra saas">
+    <link rel="icon" type="image/webp" href="../favicon.webp">
+    <link rel="shortcut icon" href="../favicon.webp">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Html5-QRCode Library -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        #reader {
+            width: 100% !important;
+            border: none !important;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #000;
+        }
+        #reader video {
+            border-radius: 1rem;
+            object-fit: cover;
+        }
+        /* Style for library buttons and select */
+        #reader button {
+            background-color: #2563eb !important;
+            color: white !important;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 0.75rem !important;
+            font-weight: 600 !important;
+            border: none !important;
+            margin: 0.5rem !important;
+            cursor: pointer !important;
+            transition: all 0.2s !important;
+        }
+        #reader button:hover {
+            background-color: #1d4ed8 !important;
+            transform: translateY(-1px) !important;
+        }
+        #reader select {
+            padding: 0.5rem 1rem !important;
+            border-radius: 0.5rem !important;
+            border: 1px solid #e2e8f0 !important;
+            background: white !important;
+            margin: 0.5rem !important;
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#1e40af',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <a href="../index.html"> 
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center gap-2">
+                        <div class="w-9 h-9 bg-slate-950 flex items-center justify-center rounded-xl shadow-lg">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold text-black uppercase tracking-tight">SIBRA SAAS</span>
+                    </div>
+                    <nav class="hidden md:flex items-center gap-6">
+                        <a href="../qr-code-generator/index.html" class="text-sm font-medium hover:text-blue-600 transition-colors">Generator</a>
+                        <a href="#scanner" class="text-sm font-medium text-blue-600 font-bold underline decoration-2 underline-offset-4">Reader</a>
+                        <a href="#donasi" class="text-sm font-medium hover:text-blue-600 transition-colors">Donasi</a>
+                        <a href="#edukasi" class="text-sm font-medium hover:text-blue-600 transition-colors">Edukasi</a>
+                    </nav>
+                </div> 
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative pt-16 pb-20 px-4 overflow-hidden">
+            <div class="max-w-4xl mx-auto text-center relative z-10 animate-fade-in">
+                <span class="inline-block px-4 py-1.5 mb-4 text-xs font-semibold tracking-wider text-blue-700 uppercase bg-blue-50 rounded-full">
+                    Aman, Cepat, & Tanpa Login
+                </span>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">
+                    QR Code Reader <br>
+                    <span class="text-blue-600">Tercepat di Device Anda</span>
+                </h1>
+                <p class="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
+                    Scan QR Code langsung melalui kamera smartphone atau upload gambar dari galeri. Data diproses secara lokal di browser untuk keamanan privasi Anda.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#scanner" class="px-8 py-4 bg-blue-600 text-white font-semibold rounded-2xl shadow-lg shadow-blue-200 hover:bg-blue-700 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Scan Sekarang
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Background Decor -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-30">
+                <div class="absolute top-0 left-1/4 w-72 h-72 bg-blue-300 rounded-full blur-[100px]"></div>
+                <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-indigo-300 rounded-full blur-[100px]"></div>
+            </div>
+        </section>
+
+        <!-- Scanner Section -->
+        <section id="scanner" class="py-12 px-4 scroll-mt-20">
+            <div class="max-w-4xl mx-auto">
+                <!-- Tab Controls -->
+                <div class="flex items-center justify-center mb-8 bg-white p-1 rounded-2xl shadow-sm border border-slate-100 w-fit mx-auto">
+                    <button id="tab-camera" class="px-6 py-2 rounded-xl text-sm font-semibold transition-all bg-blue-600 text-white shadow-sm">
+                        Kamera
+                    </button>
+                    <button id="tab-upload" class="px-6 py-2 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:bg-slate-50">
+                        Upload Gambar
+                    </button>
+                </div>
+
+                <div class="grid md:grid-cols-5 gap-8 items-start">
+                    <!-- Left: Scanner -->
+                    <div class="md:col-span-3 space-y-6">
+                        <!-- Camera Scanner Container -->
+                        <div id="camera-section" class="glass-card p-4 rounded-3xl shadow-xl shadow-slate-200/50">
+                            <div id="reader" class="rounded-2xl overflow-hidden aspect-video bg-black flex items-center justify-center">
+                                <div id="loading-stream" class="text-white text-center p-8">
+                                    <div class="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
+                                    <p class="text-sm font-medium">Menunggu Izin Kamera...</p>
+                                </div>
+                            </div>
+                            <div class="mt-4 flex items-center justify-between text-xs text-slate-500 px-2">
+                                <div class="flex items-center gap-1">
+                                    <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                                    Real-time detection
+                                </div>
+                                <button id="btn-reset" class="text-blue-600 font-bold hover:underline">Reset Scanner</button>
+                            </div>
+                        </div>
+
+                        <!-- Upload Section Container (Hidden by default) -->
+                        <div id="upload-section" class="hidden glass-card p-6 md:p-8 rounded-3xl shadow-xl shadow-slate-200/50 animate-fade-in">
+                            <label id="dropzone" class="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-slate-200 rounded-3xl cursor-pointer hover:bg-slate-50 hover:border-blue-300 transition-all p-4 text-center">
+                                <svg class="w-12 h-12 text-slate-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                </svg>
+                                <p class="text-sm font-bold text-slate-700">Klik atau Drag Image ke Sini</p>
+                                <p class="text-xs text-slate-500 mt-2">Dukungan: PNG, JPG, WEBP (Maks 5MB)</p>
+                                <input id="file-input" type="file" class="hidden" accept="image/*" />
+                            </label>
+                            
+                            <div id="image-preview-container" class="hidden mt-6">
+                                <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Preview Gambar</p>
+                                <div class="relative rounded-2xl overflow-hidden border border-slate-200 aspect-video bg-slate-50 flex items-center justify-center">
+                                    <img id="image-preview" src="#" alt="Preview" class="max-h-full object-contain" />
+                                    <button id="btn-remove-file" class="absolute top-2 right-2 p-2 bg-white/80 backdrop-blur rounded-full text-red-500 hover:bg-white shadow-sm transition-all">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Results -->
+                    <div class="md:col-span-2">
+                        <div class="sticky top-24 space-y-6">
+                            <div class="glass-card p-6 md:p-8 rounded-3xl shadow-xl shadow-slate-200/50">
+                                <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Hasil Scan
+                                </h2>
+
+                                <div id="result-placeholder" class="text-center py-10 opacity-40">
+                                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
+                                        </svg>
+                                    </div>
+                                    <p class="text-sm font-medium">Arahkan kamera ke QR Code atau upload file.</p>
+                                </div>
+
+                                <div id="result-content" class="hidden space-y-6 animate-fade-in">
+                                    <div class="p-4 bg-slate-50 border border-slate-100 rounded-2xl break-words">
+                                        <p id="decoded-text" class="text-slate-800 text-sm font-medium leading-relaxed"></p>
+                                    </div>
+
+                                    <div class="flex flex-col gap-3">
+                                        <button id="btn-copy" class="w-full py-3.5 bg-blue-600 text-white font-bold rounded-2xl shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all flex items-center justify-center gap-2">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                                            </svg>
+                                            Salin Hasil
+                                        </button>
+                                        <a id="btn-open-link" target="_blank" rel="noopener noreferrer" class="hidden w-full py-3.5 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                            </svg>
+                                            Buka Link
+                                        </a>
+                                        <a id="btn-open-wa" target="_blank" rel="noopener noreferrer" class="hidden w-full py-3.5 bg-emerald-600 text-white font-bold rounded-2xl hover:bg-emerald-700 transition-all flex items-center justify-center gap-2">
+                                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                            </svg>
+                                            Buka WhatsApp
+                                        </a>
+                                        <button id="btn-new-scan" class="text-xs font-bold text-slate-400 hover:text-blue-600 transition-colors mt-2">
+                                            Bersihkan & Scan Ulang
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tips Card -->
+                            <div class="bg-blue-600 rounded-3xl p-6 text-white shadow-xl shadow-blue-200">
+                                <div class="flex items-start gap-4">
+                                    <div class="p-2 bg-white/20 rounded-xl">
+                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold mb-1">Tips Scan Cepat</p>
+                                        <p class="text-xs text-blue-100 leading-relaxed">Pastikan QR Code berada di area terang dan tidak buram untuk hasil deteksi terbaik.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO Content Section -->
+        <article class="py-16 px-4 bg-white border-t border-slate-100">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-extrabold text-slate-900 mb-8 text-center tracking-tight">Pilihan Terbaik Scan QR Code Online Gratis di Indonesia</h2>
+                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-6">
+                    <p>
+                        Mencari <strong>pembaca QR Code gratis</strong> yang cepat dan aman? <strong>Sibra SaaS</strong> menghadirkan solusi <strong>scan QR online</strong> tanpa perlu download aplikasi tambahan. Cukup gunakan browser di smartphone atau laptop Anda untuk memindai segala jenis kode QR secara instan.
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-8 py-4">
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                            <h3 class="font-bold text-slate-900 mb-2">Scan QR dari Kamera</h3>
+                            <p class="text-sm">Akses kamera langsung untuk memindai menu restoran, link pembayaran, atau kartu nama digital dengan teknologi deteksi real-time yang akurat.</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                            <h3 class="font-bold text-slate-900 mb-2">Scan QR dari Galeri</h3>
+                            <p class="text-sm">Punya gambar QR Code di galeri? Gunakan fitur <strong>upload gambar</strong> kami untuk mengekstrak informasi dari file JPG, PNG, atau WEBP dalam hitungan detik.</p>
+                        </div>
+                    </div>
+                    <p>
+                        Sebagai platform yang mendukung UMKM dan mahasiswa, kami memastikan alat ini tetap 100% gratis tanpa login. Kami menggunakan teknologi enkripsi sisi klien, yang berarti data Anda tidak pernah dikirim ke server kami—menjadikannya salah satu <strong>QR code scanner paling aman</strong> yang tersedia saat ini.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- QRIS Donation Section -->
+        <section id="donasi" class="py-16 px-4 bg-slate-50 border-t border-slate-100 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">Dukung Keberlanjutan Kami</h2>
+                <p class="text-slate-600 mb-10 max-w-xl mx-auto text-sm md:text-base">
+                    Sibra SaaS menyediakan berbagai alat gratis untuk membantu produktivitas Anda. Donasi seikhlasnya sangat berarti bagi kami untuk menjaga server tetap menyala dan mengembangkan fitur baru.
+                </p>
+                
+                <div class="inline-block p-6 bg-white border border-slate-200 rounded-[32px] shadow-xl hover:shadow-2xl transition-all duration-300">
+                    <img src="../qr-code-generator/qris.webp" alt="QRIS Sibra SaaS" class="w-64 h-auto mx-auto rounded-2xl mb-6 shadow-sm border border-slate-50">
+                    <div class="space-y-1">
+                        <p class="text-sm font-bold text-slate-800">Donasi via QRIS</p>
+                        <p class="text-xs text-slate-400">Scan menggunakan Dana, OVO, GoPay, atau M-Banking</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="edukasi" class="py-20 px-4 bg-white border-t border-slate-100">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Kenapa Memilih Reader Kami?</h2>
+                    <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-lg transition-all">
+                        <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Keamanan Privasi</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">Seluruh proses pembacaan QR Code dilakukan di browser Anda. Tidak ada data gambar atau teks yang dikirim ke server kami.</p>
+                    </div>
+
+                    <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-lg transition-all">
+                        <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Mobile Optimized</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">Didesain khusus untuk layar kecil. Navigasi lancar dan akses kamera cepat di Android maupun iOS.</p>
+                    </div>
+
+                    <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-lg transition-all">
+                        <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Tanpa Instalasi</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">Cukup buka browser dan langsung scan. Sangat cocok untuk mahasiswa, dosen, dan UMKM yang butuh alat instan.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-12 px-4 text-white">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-2">
+                <div class="w-9 h-9 bg-slate-950 flex items-center justify-center rounded-xl shadow-lg">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                </div>
+                <span class="text-xl font-bold tracking-tight">SIBRA SAAS</span>
+            </div>
+            
+            <nav class="flex flex-col md:flex-row items-center gap-6 text-sm text-slate-400">
+                <div class="flex gap-6">
+                    <a href="../index.html" class="hover:text-white transition-colors">Home</a>
+                    <a href="../qr-code-generator/index.html" class="hover:text-white transition-colors">Generator</a>
+                    <a href="http://sibra.store/" target="_blank" class="text-white font-bold hover:text-blue-400 transition-colors tracking-widest text-base">SIBRA TECH</a>
+                </div>
+            </nav>
+
+            <p class="text-sm text-slate-500">© 2026 SIBRA SAAS. Developed for Indonesia.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[200] opacity-0 transition-all duration-300 translate-y-10 pointer-events-none">
+        <div class="bg-slate-900 text-white px-6 py-3 rounded-full shadow-xl flex items-center gap-3">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span id="toast-message" class="text-sm font-semibold text-center whitespace-nowrap">Berhasil disalin!</span>
+        </div>
+    </div>
+
+    <!-- Main JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const html5QrCode = new Html5Qrcode("reader");
+            const cameraSection = document.getElementById('camera-section');
+            const uploadSection = document.getElementById('upload-section');
+            const tabCamera = document.getElementById('tab-camera');
+            const tabUpload = document.getElementById('tab-upload');
+            const resultPlaceholder = document.getElementById('result-placeholder');
+            const resultContent = document.getElementById('result-content');
+            const decodedText = document.getElementById('decoded-text');
+            const btnCopy = document.getElementById('btn-copy');
+            const btnOpenLink = document.getElementById('btn-open-link');
+            const btnOpenWA = document.getElementById('btn-open-wa');
+            const btnReset = document.getElementById('btn-reset');
+            const btnNewScan = document.getElementById('btn-new-scan');
+            const dropzone = document.getElementById('dropzone');
+            const fileInput = document.getElementById('file-input');
+            const imagePreview = document.getElementById('image-preview');
+            const imagePreviewContainer = document.getElementById('image-preview-container');
+            const btnRemoveFile = document.getElementById('btn-remove-file');
+            const loadingStream = document.getElementById('loading-stream');
+
+            let isScanning = false;
+
+            // --- UI Tabs ---
+            const switchTab = (active) => {
+                if(active === 'camera') {
+                    tabCamera.className = "px-6 py-2 rounded-xl text-sm font-semibold transition-all bg-blue-600 text-white shadow-sm";
+                    tabUpload.className = "px-6 py-2 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:bg-slate-50";
+                    cameraSection.classList.remove('hidden');
+                    uploadSection.classList.add('hidden');
+                    startCamera();
+                } else {
+                    tabUpload.className = "px-6 py-2 rounded-xl text-sm font-semibold transition-all bg-blue-600 text-white shadow-sm";
+                    tabCamera.className = "px-6 py-2 rounded-xl text-sm font-semibold transition-all text-slate-500 hover:bg-slate-50";
+                    uploadSection.classList.remove('hidden');
+                    cameraSection.classList.add('hidden');
+                    stopCamera();
+                }
+            };
+
+            tabCamera.addEventListener('click', () => switchTab('camera'));
+            tabUpload.addEventListener('click', () => switchTab('upload'));
+
+            // --- Camera Scanning ---
+            const startCamera = async () => {
+                if(isScanning) return;
+                
+                try {
+                    isScanning = true;
+                    loadingStream.classList.remove('hidden');
+                    
+                    const config = { 
+                        fps: 15, 
+                        qrbox: { width: 250, height: 250 },
+                        aspectRatio: 1.777778
+                    };
+
+                    await html5QrCode.start(
+                        { facingMode: "environment" }, 
+                        config, 
+                        onScanSuccess
+                    );
+                    
+                    loadingStream.classList.add('hidden');
+                } catch (err) {
+                    console.error("Camera Error:", err);
+                    loadingStream.innerHTML = `<p class="text-red-400 text-xs">Error: ${err.message || 'Kamera tidak dapat diakses'}</p>`;
+                    isScanning = false;
+                }
+            };
+
+            const stopCamera = async () => {
+                if(!isScanning) return;
+                try {
+                    await html5QrCode.stop();
+                    isScanning = false;
+                } catch (err) {
+                    console.error("Stop Error:", err);
+                }
+            };
+
+            const onScanSuccess = (decodedTextValue) => {
+                handleResult(decodedTextValue);
+                // Pause scanning on success briefly
+                showToast("QR Code terdeteksi!");
+            };
+
+            // --- File Upload Scanning ---
+            fileInput.addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                processFile(file);
+            });
+
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropzone.classList.add('bg-blue-50', 'border-blue-300');
+            });
+
+            dropzone.addEventListener('dragleave', () => {
+                dropzone.classList.remove('bg-blue-50', 'border-blue-300');
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('bg-blue-50', 'border-blue-300');
+                const file = e.dataTransfer.files[0];
+                if (file) processFile(file);
+            });
+
+            const processFile = async (file) => {
+                // Preview
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreviewContainer.classList.remove('hidden');
+                    dropzone.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+
+                try {
+                    const result = await html5QrCode.scanFile(file, true);
+                    handleResult(result);
+                    showToast("QR Code terbaca dari gambar!");
+                } catch (err) {
+                    showToast("QR Code tidak ditemukan dalam gambar.", "error");
+                    console.error(err);
+                }
+            };
+
+            btnRemoveFile.addEventListener('click', () => {
+                imagePreviewContainer.classList.add('hidden');
+                dropzone.classList.remove('hidden');
+                fileInput.value = '';
+                resetResult();
+            });
+
+            // --- Result Handling ---
+            const handleResult = (text) => {
+                // Security: Sanitize output for UI
+                decodedText.textContent = text;
+                resultPlaceholder.classList.add('hidden');
+                resultContent.classList.remove('hidden');
+
+                // Detect URL
+                const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/i;
+                const isUrl = urlRegex.test(text);
+                
+                btnOpenLink.classList.add('hidden');
+                btnOpenWA.classList.add('hidden');
+
+                if (isUrl) {
+                    let finalUrl = text;
+                    if (!/^https?:\/\//i.test(text)) {
+                        finalUrl = 'https://' + text;
+                    }
+                    btnOpenLink.href = finalUrl;
+                    btnOpenLink.classList.remove('hidden');
+                }
+
+                // Detect WhatsApp Link/Manual Phone
+                if (text.includes('wa.me') || text.includes('api.whatsapp.com') || (text.startsWith('62') && text.length > 10 && /^\d+$/.test(text))) {
+                    let waUrl = text;
+                    if (/^\d+$/.test(text)) {
+                        waUrl = `https://wa.me/${text}`;
+                    }
+                    btnOpenWA.href = waUrl;
+                    btnOpenWA.classList.remove('hidden');
+                    btnOpenLink.classList.add('hidden'); // Prioritize WA button
+                }
+
+                // Scroll to result on mobile
+                if (window.innerWidth < 768) {
+                    resultContent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            };
+
+            const resetResult = () => {
+                resultPlaceholder.classList.remove('hidden');
+                resultContent.classList.add('hidden');
+                decodedText.textContent = '';
+            };
+
+            btnReset.addEventListener('click', async () => {
+                await stopCamera();
+                resetResult();
+                startCamera();
+            });
+
+            btnNewScan.addEventListener('click', () => {
+                resetResult();
+                showToast("Siap untuk scan baru");
+            });
+
+            btnCopy.addEventListener('click', () => {
+                const text = decodedText.textContent;
+                if(text) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        showToast("Hasil disalin ke clipboard!");
+                    }).catch(() => {
+                        // Fallback
+                        const el = document.createElement('textarea');
+                        el.value = text;
+                        document.body.appendChild(el);
+                        el.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(el);
+                        showToast("Hasil disalin!");
+                    });
+                }
+            });
+
+            // --- Helpers ---
+            const showToast = (msg, type = 'success') => {
+                const toast = document.getElementById('toast');
+                const toastInner = toast.querySelector('div');
+                const toastMsg = document.getElementById('toast-message');
+                const toastIcon = toast.querySelector('svg');
+                
+                toastMsg.textContent = msg;
+                
+                if (type === 'error') {
+                    toastInner.classList.replace('bg-slate-900', 'bg-red-600');
+                    toastIcon.classList.add('hidden');
+                } else {
+                    toastInner.classList.replace('bg-red-600', 'bg-slate-900');
+                    toastIcon.classList.remove('hidden');
+                }
+                
+                toast.classList.remove('opacity-0', 'translate-y-10');
+                toast.classList.add('opacity-100', 'translate-y-0');
+                
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'translate-y-10');
+                    toast.classList.remove('opacity-100', 'translate-y-0');
+                }, 3000);
+            };
+
+            // Init Camera
+            startCamera();
+        });
+    </script>
+</body>
+</html>
