@@ -372,9 +372,10 @@
             </div>
             
             <nav class="flex flex-col md:flex-row items-center gap-6 text-sm text-slate-400">
-                <div class="flex gap-6">
+                <div class="flex gap-6 text-sm">
                     <a href="../index.html" class="hover:text-white transition-colors">Home</a>
                     <a href="../qr-code-generator/index.html" class="hover:text-white transition-colors">Generator</a>
+                    <a href="../qr-code-reader/index.html" class="hover:text-white transition-colors font-bold text-blue-400">Reader</a>
                     <a href="http://sibra.store/" target="_blank" class="text-white font-bold hover:text-blue-400 transition-colors tracking-widest text-base">SIBRA TECH</a>
                 </div>
             </nav>
@@ -539,18 +540,24 @@
                 resultPlaceholder.classList.add('hidden');
                 resultContent.classList.remove('hidden');
 
-                // Detect URL
-                const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/i;
-                const isUrl = urlRegex.test(text);
+                // Detect URL (Aggressive Detection)
+                const lowerText = text.toLowerCase().trim();
+                const isUrl = lowerText.startsWith('http://') || 
+                              lowerText.startsWith('https://') || 
+                              lowerText.startsWith('www.') ||
+                              /^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(text);
                 
                 btnOpenLink.classList.add('hidden');
                 btnOpenWA.classList.add('hidden');
 
                 if (isUrl) {
-                    let finalUrl = text;
-                    if (!/^https?:\/\//i.test(text)) {
-                        finalUrl = 'https://' + text;
+                    let finalUrl = text.trim();
+                    if (lowerText.startsWith('www.')) {
+                        finalUrl = 'https://' + finalUrl;
+                    } else if (!/^https?:\/\//i.test(finalUrl) && /^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}/i.test(finalUrl)) {
+                        finalUrl = 'https://' + finalUrl;
                     }
+                    
                     btnOpenLink.href = finalUrl;
                     btnOpenLink.classList.remove('hidden');
                 }
@@ -563,7 +570,7 @@
                     }
                     btnOpenWA.href = waUrl;
                     btnOpenWA.classList.remove('hidden');
-                    btnOpenLink.classList.add('hidden'); // Prioritize WA button
+                    // If it's a WA link, we can keep both or prioritize. Standardizing to show WA specifically.
                 }
 
                 // Scroll to result on mobile
