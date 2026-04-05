@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Metadata -->
+    <title>Image Compressor & Converter - Kompres Foto & Gambar Online Gratis | Sibra SaaS</title>
+
+    <link rel="icon" type="image/webp" href="../favicon.webp">
+    <meta name="description" content="Kompres, kecilkan ukuran foto, dan convert gambar online (JPG, PNG, WebP, HEIC) tanpa mengurangi kualitas. 100% private, aman, dan diproses langsung di browser Anda.">
+    <meta name="keywords" content="kompres gambar online, kecilkan ukuran foto, convert jpg ke webp, image compressor, image converter, heic to jpg, resize image online">
+    <link rel="canonical" href="https://sibra.store/converter-image/" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Sibra SaaS Image Compressor",
+      "url": "https://sibra.store/converter-image/",
+      "description": "Browser-based image compressor and converter. 100% private, handles JPG, PNG, WebP, and HEIC.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Apakah aman menggunakan Sibra SaaS Image Compressor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sangat aman. Semua proses kompresi dilakukan secara lokal di browser Anda. File tidak pernah diunggah ke server kami (Zero-Upload Policy)."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Format apa saja yang didukung?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Kami mendukung JPG, PNG, WebP, SVG, dan format HEIC dari iPhone."
+        }
+      }]
+    }
+    </script>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sibra.store/converter-image/">
+    <meta property="og:title" content="Image Compressor & Converter Online - Sibra SaaS">
+    <meta property="og:description" content="Alat kompresi dan konversi gambar tercepat & paling private. Semua diproses di device Anda secara offline-first.">
+    <meta property="og:image" content="../favicon.webp">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Image Compressor & Converter Online - Sibra SaaS">
+    <meta property="twitter:description" content="Kompres dan konversi gambar dengan mudah, cepat, dan aman. Tanpa upload ke server.">
+
+    <link rel="icon" type="image/webp" href="../favicon.webp">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <style>
+        :root { --primary: #2563eb; --secondary: #1e40af; }
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        
+        .dropzone-active { border-color: var(--primary); background-color: rgba(37, 99, 235, 0.05); transform: scale(1.01); }
+        
+        /* Custom UI */
+        input[type=range] { -webkit-appearance: none; appearance: none; height: 6px; background: #e2e8f0; border-radius: 5px; outline: none; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: var(--primary); cursor: pointer; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        
+        .progress-bar { transition: width 0.3s ease-in-out; }
+        
+        /* Typography for Article */
+        .prose h2 { font-weight: 800; color: #1e293b; margin-top: 2.5rem; margin-bottom: 1.25rem; font-size: 1.875rem; }
+        .prose h3 { font-weight: 700; color: #334155; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.5rem; }
+        .prose p { margin-bottom: 1.5rem; line-height: 1.75; color: #475569; }
+        .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+        .prose li { margin-bottom: 0.5rem; color: #475569; }
+
+        /* Performance Optimization */
+        article { content-visibility: auto; contain-intrinsic-size: 1px 5000px; }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#2563eb', secondary: '#1e40af', accent: '#3b82f6' },
+                    borderRadius: { '4xl': '2rem', '5xl': '2.5rem' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8fafc] text-slate-900 antialiased selection:bg-blue-100">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+            <a href="../" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-slate-950 flex items-center justify-center rounded-2xl shadow-xl group-hover:scale-105 transition-transform">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl font-black text-slate-900 uppercase tracking-tighter leading-none">Sibra SaaS</span>
+                    <span class="text-[10px] font-bold text-primary mt-1 uppercase tracking-widest">Digital Hub</span>
+                </div>
+            </a>
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="../" class="text-sm font-bold text-slate-600 hover:text-primary transition-colors">Home</a>
+                <a href="../qr-code-generator/index.html" class="text-sm font-bold text-slate-600 hover:text-primary transition-colors">Generator</a>
+                <a href="../qr-code-reader/index.html" class="text-sm font-bold text-slate-600 hover:text-primary transition-colors">Reader</a>
+                <a href="#tool" class="text-sm font-bold text-primary underline decoration-2 underline-offset-8">Compressor</a>
+                <a href="#article" class="text-sm font-bold text-slate-600 hover:text-primary transition-colors">Edukasi</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative pt-20 pb-32 px-4 overflow-hidden">
+            <div class="max-w-5xl mx-auto text-center relative z-10 animate-fade-in">
+                <span class="inline-flex items-center gap-2 px-5 py-2 mb-8 text-[11px] font-black tracking-[0.2em] text-primary uppercase bg-blue-50 border border-blue-100 rounded-full">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                    </span>
+                    Fast, Private, Browser-Based
+                </span>
+                <h1 class="text-5xl md:text-7xl font-black text-slate-900 mb-8 tracking-tight leading-[1.1]">
+                    Kompres & Konversi <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Gambar Secara Instan</span>
+                </h1>
+                <p class="text-xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+                    Privasi Anda prioritas kami. Semua file diproses secara lokal di browser Anda dan <span class="font-bold text-slate-900 underline decoration-primary decoration-4 underline-offset-4">tidak pernah diunggah</span> ke server mana pun.
+                </p>
+                
+                <div class="flex items-center justify-center gap-6 text-sm font-bold text-slate-400 uppercase tracking-widest">
+                    <div class="flex items-center gap-2 text-emerald-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        SSL Secure
+                    </div>
+                    <div class="flex items-center gap-2 text-primary">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        Turbo Engine
+                    </div>
+                </div>
+            </div>
+            
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-30">
+                <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-200 rounded-full blur-[140px]"></div>
+                <div class="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-indigo-200 rounded-full blur-[140px]"></div>
+            </div>
+        </section>
+
+        <!-- Tool Container -->
+        <section id="tool" class="px-4 pb-32 scroll-mt-24">
+            <div class="max-w-6xl mx-auto">
+                <div class="glass-card rounded-[50px] p-8 md:p-16 shadow-[0_32px_64px_-16px_rgba(37,99,235,0.12)]">
+                    
+                    <!-- Upload Area -->
+                    <div id="dropzone" class="relative group border-4 border-dashed border-slate-200 rounded-[40px] p-16 md:p-24 transition-all hover:border-primary/40 hover:bg-blue-50/20 cursor-pointer text-center bg-white/40">
+                        <input type="file" id="fileInput" class="hidden" multiple accept="image/jpeg,image/png,image/webp,image/svg+xml,.heic,.heif">
+                        
+                        <div class="flex flex-col items-center gap-6">
+                            <div id="uploadIcon" class="w-24 h-24 bg-white text-primary rounded-3xl flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-500">
+                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div class="max-w-md mx-auto">
+                                <h3 class="text-2xl font-black text-slate-800 mb-3 tracking-tight">Pilih Foto atau Tarik ke Sini</h3>
+                                <p class="text-slate-500 font-medium leading-relaxed">
+                                    Mendukung JPG, PNG, WebP, HEIC (iPhone), & SVG. <br>
+                                    <span class="text-primary font-bold">Bisa memproses banyak file sekaligus.</span>
+                                </p>
+                                <!-- Trust Badge -->
+                                <div class="mt-8 inline-flex items-center gap-3 px-6 py-3 bg-emerald-50 text-emerald-700 rounded-2xl border border-emerald-100 shadow-sm animate-fade-in">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.154-2.049-.441-3z"/></svg>
+                                    <span class="text-xs font-black uppercase tracking-[0.1em]">Client-Side Processing (100% Private)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Overview (Hidden by default) -->
+                    <div id="performanceStats" class="hidden mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in">
+                        <div class="bg-white/60 p-4 rounded-3xl border border-white text-center">
+                            <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Saved</span>
+                            <span id="statSaved" class="text-xl font-black text-primary">0 MB</span>
+                        </div>
+                        <div class="bg-white/60 p-4 rounded-3xl border border-white text-center">
+                            <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Efficiency</span>
+                            <span id="statEfficiency" class="text-xl font-black text-emerald-600">0%</span>
+                        </div>
+                        <div class="bg-white/60 p-4 rounded-3xl border border-white text-center">
+                            <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Time Elapsed</span>
+                            <span id="statTime" class="text-xl font-black text-slate-800">0s</span>
+                        </div>
+                        <div class="bg-white/60 p-4 rounded-3xl border border-white text-center">
+                            <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Files Processed</span>
+                            <span id="statCount" class="text-xl font-black text-indigo-600">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Config & Controls (Hidden or Inactive) -->
+                    <div id="controls" class="hidden mt-12 space-y-12 animate-fade-in">
+                        <!-- Global Config -->
+                        <div class="grid lg:grid-cols-2 gap-8 p-10 bg-white/60 rounded-[32px] border border-white shadow-xl shadow-slate-100">
+                            <!-- Quality -->
+                            <div class="space-y-6">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-blue-100 text-primary rounded-lg flex items-center justify-center">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z"/></svg>
+                                        </div>
+                                        <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Kualitas Kompresi</label>
+                                    </div>
+                                    <span id="qualityDisplay" class="px-4 py-1.5 bg-primary text-white text-xs font-black rounded-full shadow-lg shadow-blue-200">80%</span>
+                                </div>
+                                
+                                <!-- Presets -->
+                                <div class="flex gap-2">
+                                    <button data-quality="30" class="preset-btn flex-1 py-1.5 px-3 bg-slate-100 text-[9px] font-black uppercase rounded-lg border border-slate-200/50 hover:bg-slate-200 transition-all">Low</button>
+                                    <button data-quality="60" class="preset-btn flex-1 py-1.5 px-3 bg-slate-100 text-[9px] font-black uppercase rounded-lg border border-slate-200/50 hover:bg-slate-200 transition-all">Medium</button>
+                                    <button data-quality="80" class="preset-btn flex-1 py-1.5 px-3 bg-primary/10 text-primary text-[9px] font-black uppercase rounded-lg border border-primary/20 transition-all">High</button>
+                                    <button data-quality="web" class="preset-btn flex-1 py-1.5 px-3 bg-indigo-50 text-indigo-600 text-[9px] font-black uppercase rounded-lg border border-indigo-100 transition-all">Web Opt</button>
+                                </div>
+
+                                <input type="range" id="qualitySlider" min="1" max="100" value="80" class="w-full h-2">
+                                <div class="flex justify-between text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                    <span>Extreme Comp</span>
+                                    <span>Lossless-ish</span>
+                                </div>
+                            </div>
+
+                            <!-- Target Format -->
+                            <div class="space-y-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                                    </div>
+                                    <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Format Tujuan</label>
+                                </div>
+                                <div id="formatSelector" class="flex flex-wrap gap-3">
+                                    <button data-format="original" class="format-btn flex-1 py-3 px-4 bg-primary text-white font-black rounded-[18px] shadow-xl shadow-blue-100 transition-all text-sm uppercase tracking-widest border-2 border-primary">Original</button>
+                                    <button data-format="webp" class="format-btn flex-1 py-3 px-4 bg-white text-slate-500 font-black rounded-[18px] border-2 border-slate-100 hover:border-blue-200 transition-all text-sm uppercase tracking-widest">WebP</button>
+                                    <button data-format="jpg" class="format-btn flex-1 py-3 px-4 bg-white text-slate-500 font-black rounded-[18px] border-2 border-slate-100 hover:border-blue-200 transition-all text-sm uppercase tracking-widest">JPG</button>
+                                    <button data-format="png" class="format-btn flex-1 py-3 px-4 bg-white text-slate-500 font-black rounded-[18px] border-2 border-slate-100 hover:border-blue-200 transition-all text-sm uppercase tracking-widest">PNG</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Section -->
+                        <div id="fileList" class="space-y-4 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+                            <!-- Items Injected by JS -->
+                        </div>
+
+                        <!-- Bulk Actions -->
+                        <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                            <button id="clearAll" class="flex-1 py-5 px-8 bg-slate-100 text-slate-500 font-black rounded-[24px] hover:bg-slate-200 transition-all uppercase tracking-widest text-xs">Bersihkan Semua</button>
+                            <button id="downloadZip" class="flex-[1.5] py-5 px-8 bg-slate-900 text-white font-black rounded-[24px] hover:bg-black transition-all shadow-2xl flex items-center justify-center gap-3 uppercase tracking-widest text-xs group">
+                                <svg class="w-5 h-5 text-blue-400 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                Download as ZIP (Bundled)
+                            </button>
+                            <button id="downloadNormal" class="flex-[1.5] py-5 px-8 bg-primary text-white font-black rounded-[24px] hover:bg-secondary transition-all shadow-2xl shadow-blue-200 flex items-center justify-center gap-3 uppercase tracking-widest text-xs group">
+                                <svg class="w-5 h-5 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                Download Individual
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Preview Dialog -->
+        <dialog id="previewDialog" class="fixed inset-0 z-[100] bg-transparent backdrop:bg-slate-950/90 backdrop:backdrop-blur-md p-4 w-full h-full">
+            <div class="flex items-center justify-center w-full min-h-full">
+                <div class="bg-white w-full max-w-6xl rounded-[40px] overflow-hidden shadow-2xl flex flex-col max-h-[90vh] animate-fade-in">
+                    <!-- Dialog Header -->
+                    <div class="px-8 py-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                        <div>
+                            <h2 class="text-2xl font-black text-slate-900 tracking-tighter">Perbandingan Preview</h2>
+                            <p id="previewFileName" class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">filename.jpg</p>
+                        </div>
+                        <button id="closeDialog" class="w-12 h-12 bg-white flex items-center justify-center rounded-2xl text-slate-400 hover:text-red-500 transition-colors shadow-sm border border-slate-100">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- Comparison Grid -->
+                    <div class="flex-1 overflow-auto p-8">
+                        <div class="grid md:grid-cols-2 gap-10">
+                            <!-- Input -->
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center px-2">
+                                    <span class="px-4 py-1 bg-slate-900 text-white text-[10px] font-black uppercase rounded-lg tracking-widest">Original</span>
+                                    <span id="originalMeta" class="text-xs font-black text-slate-400">---</span>
+                                </div>
+                                <div class="relative group bg-slate-100 rounded-[32px] border-2 border-slate-200/50 aspect-3/2 flex items-center justify-center overflow-hidden">
+                                    <img id="originalView" class="max-w-full max-h-[400px] object-contain shadow-2xl transition-transform group-hover:scale-[1.02]">
+                                </div>
+                            </div>
+                            <!-- Result -->
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center px-2">
+                                    <span class="px-4 py-1 bg-primary text-white text-[10px] font-black uppercase rounded-lg tracking-widest">Processed</span>
+                                    <span id="resultMeta" class="text-xs font-black text-primary">---</span>
+                                </div>
+                                <div class="relative group bg-slate-100 rounded-[32px] border-2 border-blue-100 aspect-3/2 flex items-center justify-center overflow-hidden">
+                                    <img id="resultView" class="max-w-full max-h-[400px] object-contain shadow-2xl transition-transform group-hover:scale-[1.02]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Details -->
+                    <div class="px-10 py-8 bg-slate-50 border-t border-slate-100 flex flex-wrap justify-between items-center gap-6">
+                        <div class="flex items-center gap-4">
+                            <div id="reductionText" class="px-6 py-2.5 bg-emerald-500 text-white text-sm font-black rounded-2xl shadow-lg shadow-emerald-200 uppercase tracking-widest animate-pulse">---% Smaller</div>
+                            <div class="hidden md:block text-slate-400 text-[11px] font-bold uppercase tracking-widest">Diproses secara lokal di browser Anda</div>
+                        </div>
+                        <button id="downloadSingle" class="px-10 py-4 bg-primary text-white font-black rounded-2xl hover:bg-secondary shadow-xl shadow-blue-200 transition-all flex items-center gap-3 uppercase tracking-widest text-xs">
+                            Unduh Foto Ini
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+
+        <!-- Competitor Comparison (Trust Signal) -->
+        <section class="max-w-6xl mx-auto px-4 pb-32">
+            <div class="bg-slate-900 rounded-[48px] p-12 text-center text-white relative overflow-hidden shadow-3xl">
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-black mb-12 tracking-tight uppercase">Kenapa Pilih Sibra Image Compressor?</h2>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="p-8 bg-white/5 border border-white/10 rounded-[32px] backdrop-blur-sm">
+                            <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                            </div>
+                            <h4 class="text-lg font-black mb-4 uppercase tracking-tighter">100% Private</h4>
+                            <p class="text-slate-400 text-sm font-medium leading-relaxed">Kompresor lain mengunggah foto Anda ke server mereka. Kami memprosesnya langsung di browser Anda. Data 100% aman.</p>
+                        </div>
+                        <div class="p-8 bg-white/5 border border-white/10 rounded-[32px] backdrop-blur-sm">
+                            <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            </div>
+                            <h4 class="text-lg font-black mb-4 uppercase tracking-tighter">Ultra Cepat</h4>
+                            <p class="text-slate-400 text-sm font-medium leading-relaxed">Gunakan power GPU & CPU device Anda sendiri. Tanpa antrean server, tanpa loading upload yang lama.</p>
+                        </div>
+                        <div class="p-8 bg-white/5 border border-white/10 rounded-[32px] backdrop-blur-sm">
+                            <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                            </div>
+                            <h4 class="text-lg font-black mb-4 uppercase tracking-tighter">No Ads & Unlimited</h4>
+                            <p class="text-slate-400 text-sm font-medium leading-relaxed">Tidak ada iklan yang mengganggu atau batasan jumlah file per hari. Gratis selamanya untuk kreator Indonesia.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+                <div class="absolute -top-24 -left-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
+            </div>
+        </section>
+
+        <!-- SEO Content Section -->
+        <article id="article" class="py-24 px-6 bg-white border-t border-slate-100">
+            <div class="max-w-4xl mx-auto prose prose-slate">
+                <header class="text-center mb-20 animate-fade-in">
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-8 tracking-tighter">Cara Kompres dan Convert Gambar Online Tanpa Mengurangi Kualitas</h2>
+                    <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+                </header>
+
+                <p>
+                    Di dunia digital yang serba cepat ini, performa website dan efisiensi penyimpanan adalah kunci utama. Salah satu tantangan terbesar adalah bagaimana cara mengoptimalkan aset visual tanpa harus mengorbankan kejernihan gambar. Menggunakan alat <strong>kompres gambar online</strong> yang tepat dapat membantu Anda <i>kecilkan ukuran foto tanpa pecah</i>, mempercepat waktu muat halaman, dan tentunya menghemat kuota internet.
+                </p>
+
+                <h3>Mengapa Anda Harus Mengompres Gambar?</h3>
+                <p>
+                    Gambar yang belum dioptimalkan biasanya memiliki ukuran file yang sangat besar. Hal ini tidak hanya memakan ruang penyimpanan di smartphone atau server Anda, tetapi juga memperlambat pengalaman pengguna di website. Dengan melakukan kompresi, Anda bisa mengurangi ukuran file hingga 80-90% dengan degradasi visual yang hampir tidak terlihat oleh mata manusia. Alat kami dirancang untuk menjaga keseimbangan antara ukuran file dan detail visual secara cerdas.
+                </p>
+
+                <h3>Dukungan Format Lengkap: JPG, PNG, WebP hingga HEIC</h3>
+                <p>
+                    Kebutuhan format gambar berbeda-beda tergantung platformnya. Itulah mengapa Sibra SaaS mendukung berbagai format populer:
+                </p>
+                <ul>
+                    <li><strong>JPEG/JPG:</strong> Standar emas untuk foto dengan gradasi warna yang kompleks.</li>
+                    <li><strong>PNG:</strong> Pilihan terbaik untuk grafis, logo, dan gambar dengan latar belakang transparan.</li>
+                    <li><strong>WebP:</strong> Format modern dari Google yang menawarkan kompresi lebih superior untuk web.</li>
+                    <li><strong>HEIC:</strong> Format efisien tinggi yang digunakan pada perangkat iPhone terbaru. Kini Anda bisa dengan mudah <i>convert HEIC ke JPG</i> secara langsung.</li>
+                    <li><strong>SVG:</strong> Grafis vektor yang ringan, yang kini bisa Anda ubah menjadi raster PNG dengan mudah di sini.</li>
+                </ul>
+
+                <h3>Privasi Adalah Prioritas Utama: Zero-Upload Policy</h3>
+                <p>
+                    Banyak alat <strong>convert JPG ke WebP</strong> online mengharuskan Anda mengunggah file ke server mereka. Di Sibra SaaS, kami menggunakan teknologi Web Browser API tercanggih. Semua proses pengubahan ukuran dan konversi dilakukan sepenuhnya di perangkat Anda (Client-Side). File Anda tidak pernah menyentuh server kami, menjadikannya opsi paling aman untuk data sensitif atau foto pribadi Anda.
+                </p>
+
+                <h3>Panduan Langkah demi Langkah</h3>
+                <ol>
+                    <li>Pilih atau tarik foto yang ingin Anda proses ke dalam kotak dropzone di atas.</li>
+                    <li>Tentukan kualitas kompresi yang Anda inginkan melalui slider (80% adalah angka ideal).</li>
+                    <li>Pilih format tujuan jika Anda ingin melakukan konversi (misal: JPG ke WebP).</li>
+                    <li>Tunggu proses selesai dalam hitungan detik. Anda bisa memproses banyak file sekaligus.</li>
+                    <li>Unduh hasil secara individual atau gabungkan dalam satu file ZIP yang praktis.</li>
+                </ol>
+
+                <h3>Kesimpulan</h3>
+                <p>
+                    Mengoptimalkan gambar tidak lagi memerlukan aplikasi berat seperti Photoshop. Dengan Sibra SaaS Image Compressor, Anda mendapatkan kendali penuh atas kualitas dan privasi foto Anda. Cepat, gratis, dan privat—segalanya tersedia dalam satu klik di browser Anda. Mulailah mengompres aset digital Anda sekarang juga!
+                </p>
+            </div>
+        </article>
+
+        <!-- Donation Support Section -->
+        <section id="donasi" class="py-24 px-4 bg-slate-50 border-t border-slate-100 text-center">
+            <div class="max-w-4xl mx-auto">
+                <div class="inline-flex items-center gap-3 px-4 py-2 bg-blue-100 text-primary rounded-2xl mb-6 text-[10px] font-black uppercase tracking-widest">
+                    Support Our Project
+                </div>
+                <h2 class="text-4xl font-black text-slate-900 mb-6 tracking-tight">Kopi Untuk Developer?</h2>
+                <p class="text-slate-500 mb-12 max-w-xl mx-auto font-medium">
+                    Kami menjaga tools ini tetap gratis dan tanpa iklan selamanya. Jika alat ini membantu Anda, donasi seikhlasnya sangat berarti bagi kami.
+                </p>
+                
+                <div class="inline-block p-10 bg-white border border-slate-200 rounded-[48px] shadow-3xl hover:scale-[1.01] transition-all duration-500">
+                    <p class="text-xs font-black text-slate-400 mb-6 uppercase tracking-widest">Scan QRIS Sibra SaaS</p>
+                    <div class="bg-slate-50 p-6 rounded-[32px] border border-slate-100 mb-8">
+                        <img src="../qris.webp" alt="Donasi QRIS Sibra SaaS" class="w-64 h-auto mx-auto rounded-2xl shadow-sm">
+                    </div>
+                    <button id="showDonationModal" class="w-full py-4 bg-slate-900 text-white font-black rounded-2xl hover:bg-black transition-all shadow-xl shadow-slate-200 uppercase tracking-widest text-xs">
+                        Show Fullscreen QR
+                    </button>
+                    <p class="mt-6 text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Support via Dana, OVO, GoPay, LinkAja, & Mobile Banking</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 pt-24 pb-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-16 mb-24">
+                <div class="max-w-xs">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="w-10 h-10 bg-white/10 flex items-center justify-center rounded-2xl">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        </div>
+                        <span class="text-2xl font-black text-white uppercase tracking-tighter">Sibra SaaS</span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed font-medium">
+                        Platform SaaS independen yang menghadirkan tools produktivitas browser-based gratis untuk kreator di seluruh Indonesia.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-20">
+                    <div>
+                        <h5 class="text-xs font-black text-slate-600 mb-8 uppercase tracking-[0.2em]">Produk</h5>
+                        <ul class="space-y-5 text-sm font-bold text-slate-400">
+                            <li><a href="../qr-code-generator/index.html" class="hover:text-white transition-colors">QR Generator</a></li>
+                            <li><a href="../qr-code-reader/index.html" class="hover:text-white transition-colors">QR Reader</a></li>
+                            <li><a href="../converter-image/index.html" class="text-primary font-bold">Image Compressor</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-xs font-black text-slate-600 mb-8 uppercase tracking-[0.2em]">Platform</h5>
+                        <ul class="space-y-5 text-sm font-bold text-slate-400">
+                            <li><a href="http://sibra.store/" target="_blank" class="hover:text-white transition-colors">Sibra.store</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Tentang Kami</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Donasi</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-10 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-8">
+                <p class="text-[11px] text-slate-600 font-bold uppercase tracking-[0.3em]">© 2026 SIBRA TECH COMPANY x IRFAN SYARIFUDIN</p>
+                <div class="flex gap-10 text-[11px] font-black text-slate-500 tracking-[0.2em] uppercase">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Global Toast -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] opacity-0 transition-all duration-300 translate-y-10 pointer-events-none">
+        <div class="bg-slate-900 text-white px-8 py-3.5 rounded-full shadow-3xl flex items-center gap-4">
+            <div id="toastIcon" class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></div>
+            <span id="toastMessage" class="text-xs font-black tracking-widest uppercase">Berhasil Memproses!</span>
+        </div>
+    </div>
+
+    <!-- QRIS Overlay Modal -->
+    <div id="qrisOverlay" class="hidden fixed inset-0 z-[200] bg-slate-950/80 backdrop-blur-2xl flex items-center justify-center p-4">
+        <div class="bg-white rounded-[50px] p-10 max-w-sm w-full text-center shadow-3xl animate-fade-in relative">
+            <button id="closeOverlay" class="absolute top-6 right-6 text-slate-300 hover:text-slate-900 transition-colors">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <h3 class="text-2xl font-black text-slate-900 mb-3 tracking-tighter">Support Our Work</h3>
+            <p class="text-slate-500 text-xs mb-8 px-2 font-medium leading-relaxed">Donasi Anda membantu kami tetap online dan menghadirkan lebih banyak fitur gratis.</p>
+            <div class="p-4 bg-slate-50 rounded-[40px] border border-slate-100 mb-8">
+                <img src="../qris.webp" class="w-full h-auto rounded-[24px] shadow-sm">
+            </div>
+            <button id="btnOK" class="w-full py-5 bg-slate-900 text-white font-black rounded-3xl hover:bg-black transition-all shadow-xl shadow-slate-200 uppercase tracking-[0.2em] text-xs">Mantap Boss!</button>
+        </div>
+    </div>
+
+    <!-- Background Worker Script (Non-blocking heavy logic) -->
+    <script id="workerScript" type="application/javascript">
+        self.onmessage = async function(e) {
+            const { bitmap, targetMime, quality, id } = e.data;
+            
+            try {
+                const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(bitmap, 0, 0);
+                
+                const blob = await canvas.convertToBlob({
+                    type: targetMime,
+                    quality: quality
+                });
+                
+                self.postMessage({ id, blob, width: bitmap.width, height: bitmap.height, status: 'complete' });
+            } catch (err) {
+                self.postMessage({ id, error: err.message, status: 'error' });
+            } finally {
+                bitmap.close();
+            }
+        };
+    </script>
+
+    <!-- Main Logic -->
+    <script>
+        /**
+         * SIBRA SAAS IMAGE COMPRESSOR & CONVERTER (V2)
+         * Optimized Performance with Web Workers & Concurrency
+         */
+
+        const SibraApp = (function() {
+            const MAX_FILES = 20;
+            const MAX_SIZE = 25 * 1024 * 1024; // 25MB
+
+            // Configuration & State
+            const state = {
+                files: [],
+                config: {
+                    quality: 0.8,
+                    format: 'original'
+                },
+                queue: [],
+                activeTasks: 0,
+                maxConcurrency: navigator.hardwareConcurrency || 4,
+                metrics: {
+                    totalSaved: 0,
+                    totalTime: 0,
+                    count: 0,
+                    startTime: null
+                },
+                registry: new Map(), // ObjectURL tracking
+                worker: null
+            };
+
+            const selectors = {
+                dropzone: document.getElementById('dropzone'),
+                fileInput: document.getElementById('fileInput'),
+                controls: document.getElementById('controls'),
+                fileList: document.getElementById('fileList'),
+                qualitySlider: document.getElementById('qualitySlider'),
+                qualityDisplay: document.getElementById('qualityDisplay'),
+                presetBtns: document.querySelectorAll('.preset-btn'),
+                formatBtns: document.querySelectorAll('.format-btn'),
+                clearAll: document.getElementById('clearAll'),
+                downloadZip: document.getElementById('downloadZip'),
+                downloadNormal: document.getElementById('downloadNormal'),
+                previewDialog: document.getElementById('previewDialog'),
+                originalView: document.getElementById('originalView'),
+                resultView: document.getElementById('resultView'),
+                reductionText: document.getElementById('reductionText'),
+                perfStats: document.getElementById('performanceStats'),
+                qrisOverlay: document.getElementById('qrisOverlay')
+            };
+
+            // Registry Helper
+            function registerURL(id, type, url) {
+                if (!state.registry.has(id)) state.registry.set(id, {});
+                if (state.registry.get(id)[type]) URL.revokeObjectURL(state.registry.get(id)[type]);
+                state.registry.get(id)[type] = url;
+            }
+
+            function clearRegistry(id) {
+                if (state.registry.has(id)) {
+                    Object.values(state.registry.get(id)).forEach(url => URL.revokeObjectURL(url));
+                    state.registry.delete(id);
+                }
+            }
+
+            // Web Worker Initialization
+            function initWorker() {
+                const blob = new Blob([document.getElementById('workerScript').textContent], { type: 'application/javascript' });
+                state.worker = new Worker(URL.createObjectURL(blob));
+                
+                state.worker.onmessage = (e) => {
+                    const { id, blob, width, height, status, error } = e.data;
+                    const fileObj = state.files.find(f => f.id === id);
+                    if (!fileObj) return;
+
+                    if (status === 'complete') {
+                        const url = URL.createObjectURL(blob);
+                        registerURL(id, 'processed', url);
+                        
+                        fileObj.processed = {
+                            blob, url, width, height,
+                            size: blob.size,
+                            name: fileWithoutExt(fileObj.name) + '_sibra.' + (state.config.format === 'original' ? fileObj.name.split('.').pop() : state.config.format),
+                            originalUrl: URL.createObjectURL(fileObj.file)
+                        };
+                        registerURL(id, 'original', fileObj.processed.originalUrl);
+                        
+                        fileObj.status = 'done';
+                        fileObj.progress = 100;
+                        updateStats();
+                        triggerPostEngagement();
+                    } else {
+                        fileObj.status = 'error';
+                        fileObj.error = error;
+                    }
+
+                    state.activeTasks--;
+                    renderList();
+                    processQueue();
+                };
+            }
+
+            // Initialization
+            function init() {
+                initWorker();
+                setupEventListeners();
+            }
+
+            function setupEventListeners() {
+                selectors.dropzone.addEventListener('click', () => selectors.fileInput.click());
+                selectors.fileInput.addEventListener('change', (e) => handleUpload(e.target.files));
+                
+                selectors.dropzone.addEventListener('dragover', (e) => { e.preventDefault(); selectors.dropzone.classList.add('dropzone-active'); });
+                selectors.dropzone.addEventListener('dragleave', () => selectors.dropzone.classList.remove('dropzone-active'));
+                selectors.dropzone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    selectors.dropzone.classList.remove('dropzone-active');
+                    handleUpload(e.dataTransfer.files);
+                });
+
+                selectors.qualitySlider.addEventListener('input', debounce((e) => {
+                    updateQuality(e.target.value);
+                }, 300));
+
+                selectors.presetBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const q = btn.dataset.quality;
+                        if (q === 'web') {
+                            updateQuality(75);
+                            state.config.format = 'webp';
+                            const webpBtn = Array.from(selectors.formatBtns).find(b => b.dataset.format === 'webp');
+                            if (webpBtn) updateFormatUI(webpBtn);
+                        } else {
+                            updateQuality(q);
+                        }
+                        updatePresetUI(btn);
+                    });
+                });
+
+                selectors.formatBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        state.config.format = btn.dataset.format;
+                        updateFormatUI(btn);
+                        reprocessAll();
+                    });
+                });
+
+                selectors.clearAll.addEventListener('click', clearAll);
+                selectors.downloadNormal.addEventListener('click', downloadAllIndividual);
+                selectors.downloadZip.addEventListener('click', downloadAsZip);
+
+                document.getElementById('closeDialog').addEventListener('click', () => selectors.previewDialog.close());
+                document.getElementById('closeOverlay').addEventListener('click', () => selectors.qrisOverlay.classList.add('hidden'));
+                document.getElementById('btnOK').addEventListener('click', () => selectors.qrisOverlay.classList.add('hidden'));
+                document.getElementById('showDonationModal').addEventListener('click', () => selectors.qrisOverlay.classList.remove('hidden'));
+            }
+
+            function updateQuality(val) {
+                state.config.quality = val / 100;
+                selectors.qualityDisplay.textContent = val + '%';
+                selectors.qualitySlider.value = val;
+                reprocessAll();
+            }
+
+            function updatePresetUI(target) {
+                selectors.presetBtns.forEach(btn => {
+                    btn.classList.remove('bg-primary/10', 'text-primary', 'border-primary/20');
+                    btn.classList.add('bg-slate-100', 'text-slate-500', 'border-slate-200/50');
+                });
+                target.classList.add('bg-primary/10', 'text-primary', 'border-primary/20');
+                target.classList.remove('bg-slate-100', 'text-slate-500', 'border-slate-200/50');
+            }
+
+            // Core Logic
+            async function handleUpload(fileList) {
+                if (fileList.length === 0) return;
+                
+                if (state.files.length + fileList.length > MAX_FILES) {
+                    return showToast(`Maksimal ${MAX_FILES} file sekaligus`, 'error');
+                }
+
+                selectors.controls.classList.remove('hidden');
+                selectors.dropzone.classList.add('hidden');
+                selectors.perfStats.classList.remove('hidden');
+                if (!state.metrics.startTime) state.metrics.startTime = Date.now();
+                
+                for (let file of fileList) {
+                    if (file.size > MAX_SIZE) {
+                        showToast(`File ${file.name} terlalu besar (Max 25MB)`, 'error');
+                        continue;
+                    }
+
+                    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'];
+                    const ext = file.name.split('.').pop().toLowerCase();
+                    if (!allowedTypes.includes(file.type) && !['heic', 'heif'].includes(ext)) {
+                        showToast(`Format ${ext.toUpperCase()} tidak didukung`, 'error');
+                        continue;
+                    }
+
+                    const fileObj = {
+                        id: Math.random().toString(36).substr(2, 9),
+                        file: file,
+                        name: file.name,
+                        originalSize: file.size,
+                        processed: null, status: 'queued', progress: 0
+                    };
+                    
+                    state.files.push(fileObj);
+                    addToQueue(fileObj);
+                }
+                renderList();
+            }
+
+            function addToQueue(fileObj) {
+                state.queue.push(fileObj);
+                processQueue();
+            }
+
+            async function processQueue() {
+                if (state.activeTasks >= state.maxConcurrency || state.queue.length === 0) return;
+
+                const fileObj = state.queue.shift();
+                state.activeTasks++;
+                fileObj.status = 'processing';
+                fileObj.progress = 20;
+                renderList();
+
+                try {
+                    let currentFile = fileObj.file;
+
+                    // Heavy lifting: HEIC and SVG handled on main thread (libraries needed)
+                    if (fileObj.name.toLowerCase().endsWith('.heic') || fileObj.name.toLowerCase().endsWith('.heif')) {
+                        const blob = await heic2any({ blob: currentFile, toType: 'image/jpeg', quality: 0.9 });
+                        currentFile = new File([blob], fileObj.name.replace(/\.(heic|heif)$/i, '.jpg'), { type: 'image/jpeg' });
+                    }
+
+                    if (currentFile.type === 'image/svg+xml') {
+                        currentFile = await convertSvgToPng(currentFile);
+                    }
+
+                    fileObj.progress = 50;
+                    const bitmap = await createImageBitmap(currentFile);
+                    
+                    let targetMime = currentFile.type;
+                    if (state.config.format === 'webp') targetMime = 'image/webp';
+                    if (state.config.format === 'jpg') targetMime = 'image/jpeg';
+                    if (state.config.format === 'png') targetMime = 'image/png';
+                    if (!targetMime || targetMime === 'image/svg+xml') targetMime = 'image/png';
+
+                    state.worker.postMessage({
+                        bitmap, targetMime, id: fileObj.id,
+                        quality: state.config.quality
+                    }, [bitmap]);
+
+                } catch (err) {
+                    fileObj.status = 'error';
+                    fileObj.error = err.message;
+                    state.activeTasks--;
+                    renderList();
+                    processQueue();
+                }
+            }
+
+            async function convertSvgToPng(file) {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.readAsText(file);
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        const blob = new Blob([e.target.result], {type: 'image/svg+xml;charset=utf-8'});
+                        const url = URL.createObjectURL(blob);
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = img.width || 800;
+                            canvas.height = img.height || 800;
+                            canvas.getContext('2d').drawImage(img, 0, 0);
+                            canvas.toBlob((pngBlob) => {
+                                resolve(new File([pngBlob], file.name.replace('.svg', '.png'), {type: 'image/png'}));
+                                URL.revokeObjectURL(url);
+                            }, 'image/png');
+                        };
+                        img.src = url;
+                    };
+                });
+            }
+
+            function updateStats() {
+                const done = state.files.filter(f => f.status === 'done');
+                const totalOriginal = done.reduce((acc, f) => acc + f.originalSize, 0);
+                const totalProcessed = done.reduce((acc, f) => acc + f.processed.size, 0);
+                const saved = totalOriginal - totalProcessed;
+                
+                document.getElementById('statSaved').textContent = formatBytes(saved);
+                document.getElementById('statEfficiency').textContent = totalOriginal ? Math.round((saved / totalOriginal) * 100) + '%' : '0%';
+                document.getElementById('statCount').textContent = done.length;
+                document.getElementById('statTime').textContent = Math.round((Date.now() - state.metrics.startTime) / 1000) + 's';
+            }
+
+            function triggerPostEngagement() {
+                if (!sessionStorage.getItem('qrisEngagementShown')) {
+                    setTimeout(() => {
+                        selectors.qrisOverlay.classList.remove('hidden');
+                        sessionStorage.setItem('qrisEngagementShown', 'true');
+                    }, 2000);
+                }
+            }
+
+            function renderList() {
+                selectors.fileList.innerHTML = '';
+                state.files.forEach((f) => {
+                    const reduction = f.processed ? Math.round(((f.originalSize - f.processed.size) / f.originalSize) * 100) : 0;
+                    const el = document.createElement('div');
+                    el.className = "flex items-center gap-6 bg-white/60 p-6 rounded-[28px] border border-white shadow-sm hover:shadow-md transition-all group animate-fade-in";
+                    el.innerHTML = `
+                        <div class="w-16 h-16 bg-slate-100 rounded-2xl overflow-hidden shrink-0 border border-slate-200">
+                            ${f.status === 'done' ? `<img src="${f.processed.url}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-slate-300"><svg class="w-8 h-8 ${f.status === 'processing' ? 'animate-spin' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>`}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="text-sm font-black text-slate-800 truncate uppercase tracking-tight">${f.name}</h4>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">${f.status}</span>
+                            </div>
+                            <div class="relative w-full h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3">
+                                <div class="progress-bar absolute top-0 left-0 h-full ${f.status === 'error' ? 'bg-red-500' : 'bg-primary'}" style="width: ${f.progress}%"></div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-[9px] font-black text-slate-400 uppercase">${formatBytes(f.originalSize)}</span>
+                                ${f.processed ? `
+                                    <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                    <span class="text-[9px] font-black text-primary uppercase">${formatBytes(f.processed.size)}</span>
+                                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[8px] font-black rounded-md">-${reduction}%</span>
+                                ` : ''}
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            ${f.status === 'done' ? `
+                                <button class="btn-preview p-3 bg-blue-50 text-primary hover:bg-primary hover:text-white rounded-xl transition-all shadow-sm" data-id="${f.id}">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                </button>
+                                <button class="btn-download-single p-3 bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white rounded-xl transition-all shadow-sm" data-id="${f.id}">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                </button>
+                            ` : ''}
+                            <button class="btn-remove p-3 text-slate-300 hover:text-red-500 transition-colors" data-id="${f.id}">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            </button>
+                        </div>
+                    `;
+                    selectors.fileList.appendChild(el);
+                });
+                attachDynamicListeners();
+            }
+
+            function attachDynamicListeners() {
+                document.querySelectorAll('.btn-preview').forEach(btn => btn.onclick = (e) => showPreview(e.currentTarget.dataset.id));
+                document.querySelectorAll('.btn-download-single').forEach(btn => btn.onclick = (e) => downloadFile(e.currentTarget.dataset.id));
+                document.querySelectorAll('.btn-remove').forEach(btn => btn.onclick = (e) => removeFile(e.currentTarget.dataset.id));
+            }
+
+            function showPreview(id) {
+                const f = state.files.find(item => item.id === id);
+                if (!f || !f.processed) return;
+                document.getElementById('previewFileName').textContent = f.name;
+                selectors.originalView.src = f.processed.originalUrl;
+                selectors.resultView.src = f.processed.url;
+                document.getElementById('originalMeta').textContent = `${formatBytes(f.originalSize)} (${f.processed.width}x${f.processed.height})`;
+                document.getElementById('resultMeta').textContent = `${formatBytes(f.processed.size)} (${f.processed.width}x${f.processed.height})`;
+                const reduction = Math.round(((f.originalSize - f.processed.size) / f.originalSize) * 100);
+                selectors.reductionText.textContent = `${reduction}% Smaller`;
+                document.getElementById('downloadSingle').onclick = () => downloadFile(f.id);
+                selectors.previewDialog.showModal();
+            }
+
+            function downloadFile(id) {
+                const f = state.files.find(item => item.id === id);
+                if (!f || !f.processed) return;
+                triggerDownload(f.processed.url, f.processed.name);
+            }
+
+            async function downloadAsZip() {
+                const done = state.files.filter(f => f.status === 'done');
+                if (done.length === 0) return showToast('Belum ada file selesai', 'error');
+                showToast('Menyiapkan ZIP...');
+                const zip = new JSZip();
+                done.forEach(f => zip.file(f.processed.name, f.processed.blob));
+                const content = await zip.generateAsync({type:"blob"});
+                const zipUrl = URL.createObjectURL(content);
+                triggerDownload(zipUrl, `sibra-images-${Date.now()}.zip`);
+                setTimeout(() => URL.revokeObjectURL(zipUrl), 30000);
+            }
+
+            function downloadAllIndividual() {
+                const done = state.files.filter(f => f.status === 'done');
+                if (done.length === 0) return showToast('Belum ada file selesai', 'error');
+                done.forEach((f, idx) => setTimeout(() => triggerDownload(f.processed.url, f.processed.name), idx * 800));
+            }
+
+            function clearAll() {
+                state.files.forEach(f => clearRegistry(f.id));
+                state.files = []; state.queue = [];
+                state.metrics.startTime = null;
+                renderList();
+                selectors.controls.classList.add('hidden');
+                selectors.dropzone.classList.remove('hidden');
+                selectors.perfStats.classList.add('hidden');
+                selectors.fileInput.value = '';
+            }
+
+            function removeFile(id) {
+                const idx = state.files.findIndex(f => f.id === id);
+                if (idx > -1) {
+                    clearRegistry(id);
+                    state.files.splice(idx, 1);
+                    renderList();
+                    if (state.files.length === 0) clearAll();
+                }
+            }
+
+            function reprocessAll() {
+                state.files.forEach(f => {
+                    if (f.status !== 'processing') {
+                        f.status = 'queued'; f.progress = 0;
+                        addToQueue(f);
+                    }
+                });
+                renderList();
+            }
+
+            function updateFormatUI(target) {
+                selectors.formatBtns.forEach(btn => {
+                    btn.classList.replace('bg-primary', 'bg-white');
+                    btn.classList.replace('text-white', 'text-slate-500');
+                });
+                target.classList.replace('bg-white', 'bg-primary');
+                target.classList.replace('text-slate-500', 'text-white');
+            }
+
+            function triggerDownload(url, name) {
+                const a = document.createElement('a');
+                a.href = url; a.download = name;
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a);
+            }
+
+            function formatBytes(b) {
+                if (b === 0) return '0 B';
+                const i = Math.floor(Math.log(b) / Math.log(1024));
+                return parseFloat((b / Math.pow(1024, i)).toFixed(2)) + ' ' + ['B', 'KB', 'MB', 'GB'][i];
+            }
+
+            function fileWithoutExt(n) { return n.split('.').slice(0, -1).join('.'); }
+
+            function debounce(f, w) {
+                let t;
+                return (...a) => {
+                    clearTimeout(t);
+                    t = setTimeout(() => f(...a), w);
+                };
+            }
+
+            function showToast(m, t = 'success') {
+                const toast = document.getElementById('toast');
+                document.getElementById('toastMessage').textContent = m;
+                document.getElementById('toastIcon').className = `w-2.5 h-2.5 rounded-full animate-pulse ${t === 'error' ? 'bg-red-500' : 'bg-primary'}`;
+                toast.classList.replace('opacity-0', 'opacity-100');
+                toast.classList.replace('translate-y-10', 'translate-y-0');
+                setTimeout(() => {
+                    toast.classList.replace('opacity-100', 'opacity-0');
+                    toast.classList.replace('translate-y-0', 'translate-y-10');
+                }, 4000);
+            }
+
+            return { init };
+        })();
+
+        document.addEventListener('DOMContentLoaded', SibraApp.init);
+    </script>
+</body>
+</html>
